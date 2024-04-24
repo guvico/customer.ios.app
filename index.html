@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>ios.guvico.com</title>
+</head>
+
+<body>
+  <div id="content"></div>
+  <script type="text/javascript">
+
+    document.addEventListener("content", directURL);
+
+    function directURL(event) {
+      event.preventDefault();
+
+
+      const token = window.screen.availWidth.toString() +
+        window.screen.availHeight.toString() +
+        window.navigator.platform
+
+      let query = getParameterByName('code') || null;
+      let url = `https://server.guvico.com/invite/set_invite`
+
+      if (query !== null) {
+        url = `https://server.guvico.com/invite/set_invite?code=${query}`
+      } else {
+        url = `https://server.guvico.com/invite/set_invite`
+      }
+
+      const payload = {
+        token: token
+      }
+
+      callAPI('POST', url, payload).then()
+
+      let typeDirect = getParameterByName('options') || "store";
+
+      if(typeDirect === "Vupev3finZMrCK9a5tJ0Du") {
+          window.location.assign('https://apps.apple.com/us/app/guvi-gi%C3%BAp-vi%E1%BB%87c-theo-gi%E1%BB%9D/id6443966297').target = "_top";
+        } else {
+          window.location.assign('https://itunes.apple.com/us/app/keynote/id6443966297?mt=8');
+        }
+      // Vupev3finZMrCK9a5tJ0Du co nghia la direct qua web, viet tam bay nhu the de nguoi khac k doan ra thoi =))))
+    }
+
+    async function getAPI(method, url) {
+      // Default options are marked with *
+      // return new Promise((resolve, reject) => {
+      return await fetch(url, {
+        method: method || 'GET', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        headers: {
+          'Content-Type': 'application/json'
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      }).then(response => {
+        console.log(response.status, 'response');
+        return response.json().then(data => {
+          console.log(data, 'data');
+          if (response.status !== 200) {
+            // callToast(data.message || data, "fail");
+          } else {
+            // callToast('Cập nhật thành công', "success");
+          }
+          return {
+            data: data,
+            status: response.status
+          }
+        })
+      }).catch(err => {
+        console.log(err, 'err');
+      });
+      // });
+
+      // parses JSON response into native JavaScript objects
+    }
+
+
+    async function callAPI(method, url, payload) {
+      console.log(payload, 'payload');
+      // Default options are marked with *
+      // return new Promise((resolve, reject) => {
+      return await fetch(url, {
+        method: method || 'GET', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        headers: {
+          'Content-Type': 'application/json'
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify(payload) // body data type must match "Content-Type" header
+      }).then(response => {
+        console.log(response.status, 'response');
+        return response.json().then(data => {
+          console.log(data, 'data');
+          if (response.status !== 200) {
+            callToast(data.message || data, "fail");
+          } else {
+            callToast('Cập nhật thành công', "success");
+          }
+          return {
+            data: data,
+            status: response.status
+          }
+        })
+      }).catch(err => {
+        console.log(err, 'err');
+      });
+      // });
+
+      // parses JSON response into native JavaScript objects
+    }
+
+
+    function getParameterByName(name, url = window.location.href) {
+      name = name.replace(/[\[\]]/g, '\\$&');
+      var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+    window.onload = directURL;
+  </script>
+
+</body>
+
+</html>
